@@ -1,15 +1,45 @@
 ---
+import Title from "../components/Title.astro";
+import Speaker from "../components/Speaker.astro";
+import { Button } from "../components/Button";
+import { Menu } from "../components/Menu";
+const speakers: Record<string, any>[] = await fetch(
+  "https://projects.natemoo.re/viteconf-data/speakers.json"
+).then((response) => response.json());
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="/style.css" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro</title>
+  </head>
+  <body>
+	<Menu client:idle>
+		{
+			Array.from({ length: 5 }, (_, i) => {
+				return <a href="#!">Link {i + 1}</a>;
+			})
+		}
+	</Menu>
+    <div class="wrapper">
+      <Title />
+	  <Button client:idle>Menu</Button>
+
+      <ul class="speakers">
+        {speakers.map((speaker) => <Speaker {...speaker} />)}
+      </ul>
+    </div>
+
+    <style>
+      .speakers {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 1.618em;
+      }
+    </style>
+  </body>
 </html>

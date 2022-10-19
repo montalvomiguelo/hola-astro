@@ -1,0 +1,19 @@
+---
+interface Props {
+  name: string;
+  projects: string[];
+}
+const { name, projects } = Astro.props;
+---
+
+<div>
+  <h3>{name}</h3>
+  <p>{projects}</p>
+</div>
+
+<style>
+  /* Subheading */
+  h3 {
+    color: #2800ff;
+  }
+</style>
